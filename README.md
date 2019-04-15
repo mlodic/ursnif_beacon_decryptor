@@ -4,7 +4,7 @@ Ursnif v.3 aka Dreambot/Gozi/ISFB
 
 This is a simple script that could be used to:
 * check if a suspicious URL is correlated to Ursnif activity
-* decrypt URL check-in on the fly to get data sent to the C2 server
+* decrypt the URL check-in on the fly to get the data sent to the C2 server
 
 Usage:
 ```
@@ -24,8 +24,16 @@ Output:
 [2019-04-15 11:24:25 - INFO] Congrats! decoded data: fjidtflrb=bdaxhhfg&soft=3&version=217173&user=a618b5f78c4ff30be60d08c7ba561278&server=12&id=3274&crc=3&uptime=11
 ```
 
+##### Additional info
+The script needs the key that the malware uses for encryption.
 
-We welcome:
+Some reverse engineering is required to get that info.
+
+However, observations led to the fact that the key is usually shared among a lot of samples and rarely changed.
+
+If you don't have one, you could just run the script that would try our predefined keys that we saw the malware used in the wild
+
+#### Welcome to:
 * tips on observed different behaviours of the malware
 * decryption for other phases of the communication with the C2 infrastructure
 * everything that can help to fight this threat
