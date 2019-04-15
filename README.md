@@ -24,6 +24,17 @@ Output:
 [2019-04-15 11:24:25 - INFO] Congrats! decoded data: fjidtflrb=bdaxhhfg&soft=3&version=217173&user=a618b5f78c4ff30be60d08c7ba561278&server=12&id=3274&crc=3&uptime=11
 ```
 
+Params:
+* fjidtflrb -> junk param, always present at the start of the uri to generate randomness
+* soft -> major version
+* version -> minor version
+* user -> unique user id
+* server -> unique c2 server id
+* id -> bot group id
+* crc -> payload to retrieve (1-DLL32b, 2-DLL64b, 3-ps1)
+* uptime -> time elapsed from initial infection (seconds)
+
+
 ##### Additional info
 The script needs the key that the malware uses for encryption.
 
