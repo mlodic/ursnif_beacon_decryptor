@@ -15,8 +15,11 @@ class DecryptionFailed(Exception):
 
 def ursnif_beacon_decryptor():
     parser = argparse.ArgumentParser(description='Ursnif Check-in Decryptor')
-    parser.add_argument("-u", "--url", required=True,
+    parser.add_argument("-u", "--url", required=False,
                         help='full path url of suspected ursnif check-in')
+    parser.add_argument("-o", "--only-encrypted-data", required=False,
+                        help='use this if you have the encrypted path only. This is useful for the 3.0 version that'
+                             ' does not use GET method')
     parser.add_argument("-k", "--key", required=False, default=None,
                         help="key required to decrypt. If not inserted, the script would try known ones")
     parser.add_argument("-d", "--debug", default=False, action="store_true",
@@ -27,40 +30,46 @@ def ursnif_beacon_decryptor():
     key = args.key
     url = args.url
     try:
-        if not url.startswith('http'):
-            url = "http://" + url
-        url_parsed = parse.urlparse(url)
-        c2 = url_parsed.netloc
-        path = url_parsed.path
-        logger.info("c2 domain: '{}'".format(c2))
-        logger.info("path to analyze: {}".format(path))
+        if args.url:
+            if not url.startswith('http'):
+                url = "http://" + url
+            url_parsed = parse.urlparse(url)
+            c2 = url_parsed.netloc
+            path = url_parsed.path
+            logger.info("c2 domain: '{}'".format(c2))
+            logger.info("path to analyze: {}".format(path))
 
-        found_file_type = False
-        for known_file_type in conf.KNOWN_FILE_TYPES:
-            if path.endswith('.{}'.format(known_file_type)):
-                found_file_type = True
-                break
-        if not found_file_type:
-            logger.warning("CARE! the URL you sent does not match known file types used by Ursnif for the Check-in: {}"
-                           "".format(conf.KNOWN_FILE_TYPES))
+            found_file_type = False
+            for known_file_type in conf.KNOWN_FILE_TYPES:
+                if path.endswith('.{}'.format(known_file_type)):
+                    found_file_type = True
+                    break
+            if not found_file_type:
+                logger.warning("CARE! the URL you sent does not match known file types used by Ursnif for the Check-in: {}"
+                               "".format(conf.KNOWN_FILE_TYPES))
 
-        found_first_path = False
-        for known_first_path_item in conf.KNOWN_FIRST_PATH:
-            if path.startswith('/{}/'.format(known_first_path_item)):
-                found_first_path = True
-                break
-        if not found_first_path:
-            logger.warning("CARE! the URL you sent has an URI that does not match known used by malware: {}"
-                           "".format(conf.KNOWN_FIRST_PATH))
+            found_first_path = False
+            for known_first_path_item in conf.KNOWN_FIRST_PATH:
+                if path.startswith('/{}/'.format(known_first_path_item)):
+                    found_first_path = True
+                    break
+            if not found_first_path:
+                logger.warning("CARE! the URL you sent has an URI that does not match known used by malware: {}"
+                               "".format(conf.KNOWN_FIRST_PATH))
 
-        to_decrypt_path = None
-        regex = re.compile("^/\w+/(.+)\.")
-        match = re.match(regex, path)
-        if match:
-            to_decrypt_path = match.group(1)
+            to_decrypt_path = None
+            regex = re.compile("^/\w+/(.+)\.")
+            match = re.match(regex, path)
+            if match:
+                to_decrypt_path = match.group(1)
 
-        if not to_decrypt_path:
-            raise DecryptionFailed("uri path was not extracted")
+            if not to_decrypt_path:
+                raise DecryptionFailed("uri path was not extracted")
+        elif args.only_encrypted_data:
+            to_decrypt_path = args.only_encrypted_data
+            logger.info("path to analyze: {}".format(to_decrypt_path))
+        else:
+            raise DecryptionFailed("you must provide either -u or -o option")
 
         logger.debug(to_decrypt_path)
 

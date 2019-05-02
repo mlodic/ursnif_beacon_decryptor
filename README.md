@@ -12,6 +12,10 @@ python3 ursnif_beacon_decryptor.py -u <url> -k <key>
 
 ```
 
+A different version inserts the encrypted path as data of a POST request.
+
+In case, use the option `-o` instead of `-u`
+
 #### Example:
 Input:
 ```
