@@ -40,7 +40,7 @@ extern "C"{
     char* decrypt (char* encrypted, int e_size, char* key_char)
     {
 
-        string encoded, recovered, key_encoded, iv_encoded;
+        string recovered, key_encoded;
         byte iv[Serpent::BLOCKSIZE] = { 0 };
         // cout << "iv: " << iv  << endl;
 
