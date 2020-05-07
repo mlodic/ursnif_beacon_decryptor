@@ -80,6 +80,9 @@ def ursnif_beacon_decryptor():
         # second step, restore / and + needed for base64 encoding
         to_decrypt_path = to_decrypt_path.replace('_2F', '/')
         to_decrypt_path = to_decrypt_path.replace('_2B', '+')
+        # version 2.50 added the 0A and 0D
+        to_decrypt_path = to_decrypt_path.replace('_0A', '\n')
+        to_decrypt_path = to_decrypt_path.replace('_0D', '\r')
         logger.debug(to_decrypt_path)
 
         # restore the padding
