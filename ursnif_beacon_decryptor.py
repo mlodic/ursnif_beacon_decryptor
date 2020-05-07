@@ -46,6 +46,7 @@ def ursnif_beacon_decryptor():
                     break
             if not found_file_type:
                 logger.warning("CARE! the URL you sent does not match known file types used by Ursnif for the Check-in: {}"
+                               "\n Exception: version 2.50 does not use the file type"
                                "".format(conf.KNOWN_FILE_TYPES))
 
             found_first_path = False
@@ -58,7 +59,10 @@ def ursnif_beacon_decryptor():
                                "".format(conf.KNOWN_FIRST_PATH))
 
             to_decrypt_path = None
-            regex = re.compile("^/\w+/(.+)\.")
+            if found_file_type:
+                regex = re.compile("^/\w+/(.+)\.")
+            else:
+                regex = re.compile("^/\w+/(.+)")
             match = re.match(regex, path)
             if match:
                 to_decrypt_path = match.group(1)

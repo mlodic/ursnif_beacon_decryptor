@@ -38,6 +38,9 @@ Params:
 * crc -> payload to retrieve (1-DLL32b, 2-DLL64b, 3-ps1)
 * uptime -> time elapsed from initial infection (seconds)
 
+Different versions could have more parametres. Example:
+`hash time action os system tor`
+
 
 #### Requirements
 * Python3
