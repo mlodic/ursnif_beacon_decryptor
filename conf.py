@@ -1,6 +1,6 @@
 KNOWN_FILE_TYPES = ["bmp", "avi", "jpeg", "png", "gif", "htm", "ttf"]
 
-KNOWN_FIRST_PATH = ["images", "wpapi", "upx", "rpc", "wpx", "webstore", "api1"]
+KNOWN_FIRST_PATH = ["images", "wpapi", "upx", "rpc", "wpx", "webstore", "api1", "manifest"]
 
 KNOWN_KEYS = ["10291029JSJUYNHG", "10291029JSJUYUON", "10291029JSJUXMPP", "Gwe9HMygngWe8kPK",
               "WIdtM3YCfxhwrbV1", "Gu9foUnsY506KSJ1", "32291667LSJUYNUU", "U7yKaYwFde7YtppY",
